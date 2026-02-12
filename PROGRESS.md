@@ -27,6 +27,33 @@ Confidence 1–10: 8
     It's for API endpoints and request handling 
 5. Flow of signup request
     POST request -> router to endpoint -> DB session -> check email -> service creates user(hashes password, saves to DB) -> response with user info 
-    
-     
 
+
+## Day 3 – (Feb 10, 2026)
+
+Time spent: 1 hour
+What I built: tokens, secret key, server using secret key generate tokens and later singed with secret to log them in, HTTPBearer to extract token from Authorization header
+Hardest part: getting the /me work but turned out I was using the whole json output instead of just the token lol
+Concept learned: login, login with token, secret key, authorization header with token and HTTPBearer to extract it
+Confidence 1–10: 9
+
+
+## Day 4 – (Feb 11, 2026)
+
+Time spent: 1 hour
+What I built: post creation, schemas, models, foreign key and backpopulates  
+Hardest part: all easy but many new things to soak in
+Concept learned: foreign key, models, shcemas, db, foreign key - enforces referential integrity, I can't create a post with a user_id that deosn't exist and it defines the relationship between the posts and users tables so joins/relationships make sense
+Confidence 1–10: 8
+
+## Day 5 – (Feb 11, 2026)
+
+Time spent: 1 hour
+What I built: get posts, delete posts, update posts 
+Hardest part: testing in fast api docs haha 
+Concept learned: models, schemas, lots of back and forth with routers and services, api testing, authorizattion vs Authentication
+
+Authentication : Who are you?
+Authorization: What can you do ? 
+401 - unauthorized, 403 - don't exist, 404 - Not allowed 
+Confidence 1–10: 9
