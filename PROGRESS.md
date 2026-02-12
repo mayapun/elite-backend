@@ -57,3 +57,11 @@ Authentication : Who are you?
 Authorization: What can you do ? 
 401 - unauthorized, 403 - don't exist, 404 - Not allowed 
 Confidence 1–10: 9
+
+
+Day 6
+
+Time spent: 1 hr
+Hardest concept: not the hardest but got more familiar with limit and offset
+What clicked:limit and offset and pagination and why order_by matters
+Confidence: 9.5!

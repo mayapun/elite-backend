@@ -1,10 +1,10 @@
 PHASE 1 – Core API
-[ ] Project setup
-[ ] Docker + Postgres
-[ ] Auth system
-[ ] CRUD posts
-[ ] Project structure
-[ ] Testing
+[-] Project setup
+[-] Docker + Postgres
+[-] Auth system
+[-] CRUD posts
+[-] Project structure
+[-] Testing
 
 PHASE 2 – Database Mastery
 [ ] Indexes

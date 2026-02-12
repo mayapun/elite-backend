@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import Query, APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 
@@ -19,15 +19,17 @@ def create_new_post(
     return create_post(db, post.content, current_user.id)
 
 @router.get("/", response_model=list[PostResponse])
-def list_posts(db: Session = Depends(get_db)):
-    return get_posts(db)
+def list_posts(db: Session = Depends(get_db), limit:int = Query(10, le=50), offset:int = 0):
+    return get_posts(db, limit, offset)
 
 @router.get("/me", response_model=list[PostResponse])
 def get_my_posts(
     db:Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
+    limit:int = Query(10, le=50),
+    offset:int= 0,
 ):
-    return get_posts_by_user(db, current_user.id)
+    return get_posts_by_user(db, current_user.id, limit, offset)
 
 @router.delete("/{post_id}")
 def delete_my_post(
