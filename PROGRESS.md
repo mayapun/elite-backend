@@ -59,9 +59,25 @@ Authorization: What can you do ?
 Confidence 1–10: 9
 
 
-Day 6
+## Day 6 - Feb 11, 2026
 
 Time spent: 1 hr
 Hardest concept: not the hardest but got more familiar with limit and offset
 What clicked:limit and offset and pagination and why order_by matters
 Confidence: 9.5!
+
+
+## DAY 7 - Feb 13, 2026
+Time spent: 1 hr
+Concept: Cursor Pagination and indexing, difference between offset and cursor. Offset walks past the rows but cursor basically helps it jump to the index or cursor and count it from there which makes it much faster. 
+what clicked: How the cursor pagination actually works
+confidence: 8.5
+
+
+
+## Day 8 - Feb 13, 2026 
+
+Concept: N+1 is a load type where it loads or queries one query first to get all the posts and later queries for the number of the posts returned by the first query to get the users of each post. This is not really an effective way of doing it that's why we do joinedload so we get all the information with one singe joined query. 
+We will know it's N+1 situation if we are loading a list without joined load or by the count of sql queries that's been evoked. 
+EXPLAIN ANALYZE shows you the execution details of the query that's been triggered when an api call is made. 
+confidence: 9! 

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Index
 from sqlalchemy.orm import relationship
 from app.db import Base
 
@@ -19,3 +19,7 @@ class Post(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="posts")
+
+    __table_args__ = (
+        Index("ix_posts_user_id", "user_id", "id"),
+    )

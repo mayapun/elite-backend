@@ -1,6 +1,7 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from app.models import Post
-
+from typing import Optional
+from sqlalchemy import desc
 
 def create_post(db: Session, content:str, user_id: int):
     post = Post(content=content, user_id=user_id)
@@ -46,3 +47,36 @@ def update_post(db:Session, post_id:int, user_id:int, content:str):
     db.commit()
     db.refresh(post)
     return post
+
+def get_posts_cursor(db: Session, limit:int, cursor:Optional[int]):
+    q = db.query(Post).order_by(desc(Post.id))
+
+    if cursor is not None:
+        q = q.filter(Post.id < cursor)
+
+    items = q.limit(limit).all()
+    next_cursor = items[-1].id if len(items) == limit else None
+    return items, next_cursor
+
+def get_my_posts_cursor(db: Session, user_id:int, limit:int, cursor: Optional[int]):
+    q = (
+        db.query(Post)
+        .filter(Post.user_id == user_id)
+        .order_by(desc(Post.id))
+    )
+
+    if cursor is not None:
+        q = q.filter(Post.id < cursor)
+
+    items = q.limit(limit).all()
+    next_cursor = items[-1].id if len(items) == limit else None
+    return items, next_cursor
+
+def get_posts_with_users(db: Session, limit: int = 20):
+    return(
+        db.query(Post)
+        .options(joinedload(Post.user))
+        .order_by(Post.id.desc())
+        .limit(limit)
+        .all()
+    )
