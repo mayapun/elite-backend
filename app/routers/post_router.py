@@ -4,7 +4,7 @@ from typing import Optional
 
 from app.db import get_db
 from app.schemas import PostCreate, PostResponse, PostUpdate, PaginatedPosts, PostWithuserResponse
-from app.services.post_service import create_post, get_posts, get_posts_by_user, delete_post, update_post, get_posts_cursor, get_my_posts_cursor, get_posts_with_users
+from app.services.post_service import create_post, get_posts, get_posts_by_user, delete_post, update_post, get_posts_cursor, get_my_posts_cursor, get_posts_with_users, create_post_with_audit
 from app.dependencies import get_current_user
 from app.models import User, Post
 
@@ -16,7 +16,7 @@ def create_new_post(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    return create_post(db, post.content, current_user.id)
+    return create_post_with_audit(db, post.content, current_user.id)
 
 @router.get("/", response_model=PaginatedPosts)
 def list_posts(db: Session = Depends(get_db), limit:int = Query(10, le=50), cursor: Optional[int] = None):
@@ -39,13 +39,7 @@ def delete_my_post(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    result = delete_post(db, post_id, current_user.id)
-    if result is None:
-        raise HTTPException(status_code=404, detail="Post not found")
-    
-    if result == "FORBIDDEN":
-        raise HTTPException(status_code=403, detail="Not allowed")
-    
+    delete_post(db, post_id, current_user.id)
     return {"status": "deleted"}
 
 @router.put("/{post_id}", response_model=PostResponse)

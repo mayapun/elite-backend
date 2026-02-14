@@ -9,7 +9,7 @@ PHASE 1 – Core API
 PHASE 2 – Database Mastery
 [-] Indexes
 [-] Query optimization
-[ ] Transactions
+[-] Transactions
 [-] EXPLAIN ANALYZE
 [ ] Redis caching
 

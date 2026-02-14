@@ -87,3 +87,19 @@ confidence: 9!
 Concept - Alembic migration. We need to do the slow tracked migration so we don't have to drop the tables every time some schema changes are there. With alembic revision --autogenerate we create a new migration file that compares our current models agaisnt the current schema and writes the diff. and after that alembic upgrade head basically applies that change or migrations to the database, moving it forward to the latest revision. 
 confidence: 9!
 
+
+## Day 10 - Feb 13, 2026 
+
+Concept - Transaction is like this importtant event where you might have to roll back in case all of the activity's process is not complete. flush() helps to keep the partial data in DB without commiting in case we need to rollover if the transaction is not complete. 
+confidence: 9! 
+
+## Day 11 - Feb 13, 2026 
+
+Concept - We can also implement a clean and clear way for error handling so it returns a structured result even if it has so many return results, including different kinds of errors. 
+confidence: 9! 
+
+
+## Day 12 - Feb 13, 2026 
+
+Concept - Phew! Middleware and how it runs around every request like a wrapper around the entire API os we put cross-cutting stuff. Logging is very imp cuase it's structured and really helpful in debugging.
+Confidence: 9! 
