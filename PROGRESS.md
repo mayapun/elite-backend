@@ -103,3 +103,10 @@ confidence: 9!
 
 Concept - Phew! Middleware and how it runs around every request like a wrapper around the entire API os we put cross-cutting stuff. Logging is very imp cuase it's structured and really helpful in debugging.
 Confidence: 9! 
+
+
+## Day 13 - Feb 13, 2026 
+Concept - REdis caching! So basically we storing data temporarily based on keys or other unique key and our apis will hit that or check if it has the required data first before hitting our DB. However, we delete cache after writes so we don't show stale data and same for the scenarios where the data is changed. Learned about serialization too! It's basically converting a Python object into a format that can be stored or sent.
+
+Python obect ----> JSON string
+Confidence: 8!

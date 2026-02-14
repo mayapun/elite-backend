@@ -1,12 +1,14 @@
 from fastapi import Query, APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import Optional
+from fastapi.encoders import jsonable_encoder
 
 from app.db import get_db
 from app.schemas import PostCreate, PostResponse, PostUpdate, PaginatedPosts, PostWithuserResponse
 from app.services.post_service import create_post, get_posts, get_posts_by_user, delete_post, update_post, get_posts_cursor, get_my_posts_cursor, get_posts_with_users, create_post_with_audit
 from app.dependencies import get_current_user
 from app.models import User, Post
+from app.cache import get_cache, set_cache
 
 router = APIRouter(prefix="/posts", tags=["posts"])
 
@@ -20,8 +22,17 @@ def create_new_post(
 
 @router.get("/", response_model=PaginatedPosts)
 def list_posts(db: Session = Depends(get_db), limit:int = Query(10, le=50), cursor: Optional[int] = None):
+    cache_key = f"posts:{limit}:{cursor}"
+    cached = get_cache(cache_key)
+    if cached:
+        return cached
+    
     items, next_cursor = get_posts_cursor(db, limit, cursor)
-    return {"items": items, "next_cursor": next_cursor}
+    result = {"items": items, "next_cursor": next_cursor}
+
+    encoded = jsonable_encoder(result)
+    set_cache(cache_key, encoded)
+    return result
 
 @router.get("/me", response_model=PaginatedPosts)
 def get_my_posts(

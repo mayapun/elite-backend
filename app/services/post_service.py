@@ -5,6 +5,7 @@ from typing import Optional
 from sqlalchemy import desc
 from sqlalchemy.exc import SQLAlchemyError
 from app.logger import logger
+from app.cache import delete_cache
 
 def create_post(db: Session, content:str, user_id: int):
     post = Post(content=content, user_id=user_id)
@@ -36,6 +37,7 @@ def delete_post(db: Session, post_id:int, user_id:int):
 
     post.is_deleted = True
     db.commit()
+    delete_cache("posts")
     return post
 
 def update_post(db:Session, post_id:int, user_id:int, content:str):
@@ -99,6 +101,7 @@ def create_post_with_audit(db: Session, content: str, user_id:int):
 
         db.commit()
         db.refresh(post)
+        delete_cache("posts")
         logger.info(f"Post {post.id} created")
         return post
     except SQLAlchemyError:
