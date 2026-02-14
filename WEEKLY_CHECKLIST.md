@@ -7,10 +7,10 @@ PHASE 1 – Core API
 [-] Testing
 
 PHASE 2 – Database Mastery
-[ ] Indexes
-[ ] Query optimization
+[-] Indexes
+[-] Query optimization
 [ ] Transactions
-[ ] EXPLAIN ANALYZE
+[-] EXPLAIN ANALYZE
 [ ] Redis caching
 
 PHASE 3 – Scaling

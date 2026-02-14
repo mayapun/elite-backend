@@ -81,3 +81,9 @@ Concept: N+1 is a load type where it loads or queries one query first to get all
 We will know it's N+1 situation if we are loading a list without joined load or by the count of sql queries that's been evoked. 
 EXPLAIN ANALYZE shows you the execution details of the query that's been triggered when an api call is made. 
 confidence: 9! 
+
+## Day 9 - Feb 13, 2026 
+
+Concept - Alembic migration. We need to do the slow tracked migration so we don't have to drop the tables every time some schema changes are there. With alembic revision --autogenerate we create a new migration file that compares our current models agaisnt the current schema and writes the diff. and after that alembic upgrade head basically applies that change or migrations to the database, moving it forward to the latest revision. 
+confidence: 9!
+
