@@ -38,6 +38,14 @@ async def log_requests(request:Request, call_next):
     )
     return response
 
+@app.middleware("http")
+async def log_time(request, call_next):
+    start  = time.time()
+    response = await call_next(request)
+    duration = time.time() - start
+    print(f"{request.url.path} took {duration:.3f}s")
+    return response
+
 @app.exception_handler(AppException)
 async def app_exception_handler(request, exc:AppException):
     return JSONResponse(

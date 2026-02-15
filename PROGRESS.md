@@ -152,4 +152,36 @@ Concept: Tests are important cuase they prevent regressions and make systems saf
 
 Confidence: 7
 
+## Day 21 - Feb 15, 2026 
 
+Concept: 
+API becomes slow when:
+slow database queries
+full table scans(no indexes)
+N+1 queries
+too much data returned
+blocking work inside request
+no caching
+too many requests at once
+heavy computations in request
+
+Caching improves speed cause it stores the data in memory, avoids database queries, and avoids heavy computation. 
+
+Pagination matters cause it results faster queries, smaller responses, better performance, and scalable APIs
+
+Worker improve performance cause it results faster responses, API stays responsive, heavy work happens separately, and system scales better. 
+
+Confidence: 8.5
+
+## Day 22 - Feb 15, 2026
+
+Concept: 
+As an engineer, we should always think:
+1. Will this scale ?
+2. Can it be cached ?
+3. Should this be async ?
+4. What if 1M users ? 
+
+## Day 23 - Feb 15, 2026 
+
+Concept: 
