@@ -4,6 +4,7 @@ from fastapi import FastAPI, Depends, Request
 from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse
 from app.exceptions import AppException
+from fastapi.staticfiles import StaticFiles
 
 from app.db import Base, engine, get_db
 from app.routers import user_router, post_router
@@ -14,6 +15,8 @@ app = FastAPI()
 
 app.include_router(user_router.router)
 app.include_router(post_router.router)
+
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 @app.middleware("http")
 async def log_requests(request:Request, call_next):

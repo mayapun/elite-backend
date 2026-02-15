@@ -121,3 +121,31 @@ confidence: 8
 Concept - text search  with '%' scans a lot of data so it's very expensive! Query composition is something where we can do lots of filters execution one by one. 
 confidence: 7
 
+
+## Day 16 - Feb 15, 2026 
+
+Concept: Indexing is important cause then the process dones't have to scan the whole data to find something. However, using indexing a lot doesn't help cause that will then slow writing and also takes memory. 
+
+confidence: 8
+
+## Day 17 - Feb 15, 2026
+
+Concept: Rate limiting protects the system from accidental infinite loops from client where they are hitting the server non stop. It also protects from DOS(Deniel of service). Redis is used for this cause it stores counters in memory and supports key experation and INCR and also works across multiple API instances. user based limits authenticated actions and IP-based limits anonymous access. Login endpoints are strict cause they are primary targes for brute-force password attacks. 
+
+confidence: 7.5
+
+## Day 18 - Feb 15, 2026
+
+Concept: We store files in cloud or disk but just path in DB cause storing binary blobs in DB makes it slow, heavy and expensive. So we store files in cloud and return file path instead. 
+
+confidence: 8
+
+## Day 19 - Feb 15, 2026 
+
+Concept: Background tasks run in the API process, queues run in separate worker processes. We can add more workers to handle obs without slowing the API. Redis is perfect for queues cause it provides fast, atomic push/pop operations for job processing. We use queues for slow or non-critical work that doesn't need to block the request.
+
+confidence: 8
+
+## Day 20 - Feb 15, 2026 
+
+Concept: 

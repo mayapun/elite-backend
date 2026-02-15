@@ -1,4 +1,5 @@
-from fastapi import Query, APIRouter, Depends, HTTPException, BackgroundTasks
+from fastapi import Query, APIRouter, Depends, HTTPException, BackgroundTasks, UploadFile, File
+import shutil, uuid
 from app.logger import logger
 from sqlalchemy.orm import Session
 from typing import Optional
@@ -10,6 +11,8 @@ from app.services.post_service import create_post, get_posts, get_posts_by_user,
 from app.dependencies import get_current_user
 from app.models import User, Post
 from app.cache import get_cache, set_cache
+from app.rate_limit import rate_limit
+from app.queue import enqueue
 
 router = APIRouter(prefix="/posts", tags=["posts"])
 
@@ -23,9 +26,10 @@ def create_new_post(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    rate_limit(f"post:{current_user.id}", limit=10)
     created =  create_post_with_audit(db, post.content, current_user.id)
-
-    background_tasks.add_task(log_post_created, created.id)
+    enqueue("post_created", {"post_id":created.id})
+    # background_tasks.add_task(log_post_created, created.id)
     return created
 
 @router.get("/", response_model=PaginatedPosts)
@@ -81,3 +85,13 @@ def update_my_post(
 @router.get("/with-users", response_model=list[PostWithuserResponse])
 def posts_with_users(db: Session = Depends(get_db)):
     return get_posts_with_users(db, limit=20)
+
+@router.post("/upload")
+def upload_file(file:UploadFile = File(...)):
+    file_id = str(uuid.uuid4())
+    file_path = f"uploads/{file_id}_{file.filename}"
+
+    with open(file_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    return {"file_path": file_path}

@@ -8,6 +8,7 @@ from app.services.auth_service import create_access_token
 from app.models import User
 from app.dependencies import get_current_user
 from app.models import User
+from app.rate_limit import rate_limit
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -20,6 +21,7 @@ def signup(user: UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=Token)
 def login(user:UserCreate, db:Session = Depends(get_db)):
+    rate_limit(f"login:{user.email}", limit=5)
     db_user = authenticate_user(db, user.email, user.password)
     if not db_user:
         raise HTTPException(status_code=401, detail="Invalid credentials")

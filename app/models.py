@@ -16,8 +16,8 @@ class Post(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     content = Column(String)
-    user_id = Column(Integer, ForeignKey("users.id"))
-    created_at = Column(DateTime, server_default=func.now())
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    created_at = Column(DateTime, server_default=func.now(), index=True)
     is_deleted = Column(Boolean, nullable=False, server_default="false")
 
     user = relationship("User", back_populates="posts")

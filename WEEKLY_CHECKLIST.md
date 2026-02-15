@@ -11,10 +11,10 @@ PHASE 2 – Database Mastery
 [-] Query optimization
 [-] Transactions
 [-] EXPLAIN ANALYZE
-[ ] Redis caching
+[-] Redis caching
 
 PHASE 3 – Scaling
-[ ] Background jobs
+[-] Background jobs
 [ ] Feed system
 [ ] Rate limiting
 [ ] Load testing
