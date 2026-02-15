@@ -1,4 +1,5 @@
-from fastapi import Query, APIRouter, Depends, HTTPException
+from fastapi import Query, APIRouter, Depends, HTTPException, BackgroundTasks
+from app.logger import logger
 from sqlalchemy.orm import Session
 from typing import Optional
 from fastapi.encoders import jsonable_encoder
@@ -12,22 +13,29 @@ from app.cache import get_cache, set_cache
 
 router = APIRouter(prefix="/posts", tags=["posts"])
 
+def log_post_created(post_id:int):
+    logger.info(f"Background: post {post_id} created")
+
 @router.post("/", response_model=PostResponse)
 def create_new_post(
     post: PostCreate,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    return create_post_with_audit(db, post.content, current_user.id)
+    created =  create_post_with_audit(db, post.content, current_user.id)
+
+    background_tasks.add_task(log_post_created, created.id)
+    return created
 
 @router.get("/", response_model=PaginatedPosts)
-def list_posts(db: Session = Depends(get_db), limit:int = Query(10, le=50), cursor: Optional[int] = None):
-    cache_key = f"posts:{limit}:{cursor}"
+def list_posts(db: Session = Depends(get_db), limit:int = Query(10, le=50), cursor: Optional[int] = None, search: str|None = None, user_id: int| None = None, sort: str = "desc"):
+    cache_key = f"posts:{limit}:{cursor}:{search}:{user_id}:{sort}"
     cached = get_cache(cache_key)
     if cached:
         return cached
     
-    items, next_cursor = get_posts_cursor(db, limit, cursor)
+    items, next_cursor = get_posts_cursor(db, limit, cursor, search, user_id, sort)
     result = {"items": items, "next_cursor": next_cursor}
 
     encoded = jsonable_encoder(result)

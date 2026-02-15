@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session, joinedload
 from app.models import Post, AuditLog
 from app.exceptions import NotFoundException, ForbiddenException
 from typing import Optional
-from sqlalchemy import desc
+from sqlalchemy import asc, desc
 from sqlalchemy.exc import SQLAlchemyError
 from app.logger import logger
 from app.cache import delete_cache
@@ -14,7 +14,12 @@ def create_post(db: Session, content:str, user_id: int):
     db.refresh(post)
     return post
 
-def get_posts(db:Session, limit:int, offset:int):
+def get_posts(db:Session, limit:int, offset:int, search: str| None = None):
+    query = db.query(Post).filter(Post.is_deleted == False)
+
+    if search:
+        query = query.filter(Post.content.ilike(f"%{search}%"))
+
     return (
         db.query(Post)
         .filter(Post.is_deleted == False)
@@ -54,11 +59,23 @@ def update_post(db:Session, post_id:int, user_id:int, content:str):
     db.refresh(post)
     return post
 
-def get_posts_cursor(db: Session, limit:int, cursor:Optional[int]):
-    q = db.query(Post).filter(Post.is_deleted == False).order_by(desc(Post.id))
+def get_posts_cursor(db: Session, limit:int, cursor:Optional[int], search: str|None = None, user_id: int | None = None, sort: str ="desc"):
+    q = db.query(Post).filter(Post.is_deleted == False)
 
-    if cursor is not None:
-        q = q.filter(Post.id < cursor)
+    if search:
+        q = q.filter(Post.content.ilike(f"%{search}%"))
+
+    if user_id:
+        q = q.filter(Post.user_id == user_id)
+
+    if sort == "asc":
+        if cursor is not None:
+            q = q.filter(Post.id > cursor)
+        q = q.order_by(asc(Post.id))
+    else:
+        if cursor is not None:
+            q = q.filter(Post.id < cursor)
+        q = q.order_by(desc(Post.id))
 
     items = q.limit(limit).all()
     next_cursor = items[-1].id if len(items) == limit else None

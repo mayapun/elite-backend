@@ -106,7 +106,18 @@ Confidence: 9!
 
 
 ## Day 13 - Feb 13, 2026 
-Concept - REdis caching! So basically we storing data temporarily based on keys or other unique key and our apis will hit that or check if it has the required data first before hitting our DB. However, we delete cache after writes so we don't show stale data and same for the scenarios where the data is changed. Learned about serialization too! It's basically converting a Python object into a format that can be stored or sent.
+Concept - Redis caching! So basically we storing data temporarily based on keys or other unique key and our apis will hit that or check if it has the required data first before hitting our DB. However, we delete cache after writes so we don't show stale data and same for the scenarios where the data is changed. Learned about serialization too! It's basically converting a Python object into a format that can be stored or sent.
 
 Python obect ----> JSON string
 Confidence: 8!
+
+## Day 14 - Feb 13, 2026
+
+Concept - background tasks imporves UX by delaying the not so important or not too long process so the user doesn't have to wait for too long. However, if the process is too long, it's not recommended to use background work. Request work is critical path work and it must finish before the response is returned but background work can happen after the response is returned. If the background work fails, the request should still succeed. 
+confidence: 8
+
+## Day 15 - Feb 15, 2026 
+
+Concept - text search  with '%' scans a lot of data so it's very expensive! Query composition is something where we can do lots of filters execution one by one. 
+confidence: 7
+

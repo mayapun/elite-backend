@@ -10,5 +10,6 @@ def get_cache(key:str):
 def set_cache(key:str, value, ttl=60):
     r.set(key, json.dumps(value), ex=ttl)
 
-def delete_cache(key:str):
-    r.delete(key)
+def delete_cache(prefix:str):
+    for key in r.keys(f"{prefix}*"):
+        r.delete(key)

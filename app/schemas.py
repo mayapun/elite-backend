@@ -1,9 +1,10 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, constr
 from typing import List, Optional
 
 class UserCreate(BaseModel):
     email: EmailStr
-    password: str
+    # bcrypt only considers the first 72 bytes of a password; reject longer input up front.
+    password: constr(min_length=1, max_length=72)
 
 class UserResponse(BaseModel):
     id: int
