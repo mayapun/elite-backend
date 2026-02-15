@@ -148,4 +148,8 @@ confidence: 8
 
 ## Day 20 - Feb 15, 2026 
 
-Concept: 
+Concept: Tests are important cuase they prevent regressions and make systems safe to change. TestClient simulates real API requests without running a server. Unit tests check functions while integration tests check full systems. Auth protects data and must always be reliable. 
+
+Confidence: 7
+
+

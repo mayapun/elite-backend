@@ -9,3 +9,5 @@ bcrypt<4
 python-jose[cryptography]
 redis
 python-multipart
+pytest
+httpx
