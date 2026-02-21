@@ -1,0 +1,83 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens (warm calm palette) */
+:root {
+  --bg: 255 252 248;       /* warm off-white */
+  --card: 255 255 255;     /* paper white */
+  --ink: 25 24 22;         /* soft near-black */
+  --muted: 118 110 102;    /* warm gray */
+  --border: 236 228 218;   /* sand border */
+  --accent: 214 157 146;   /* muted rose */
+}
+
+html, body { height: 100%; }
+
+body {
+  color: rgb(var(--ink));
+  background:
+    radial-gradient(1200px 600px at 10% 0%, rgba(214, 157, 146, 0.20), transparent 55%),
+    radial-gradient(1200px 700px at 90% 10%, rgba(176, 205, 190, 0.22), transparent 60%),
+    radial-gradient(900px 600px at 50% 95%, rgba(234, 214, 165, 0.20), transparent 55%),
+    rgb(var(--bg));
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* layout helper */
+.container-narrow {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* reusable UI primitives */
+.card {
+  background: rgba(var(--card), 0.78);
+  border: 1px solid rgb(var(--border));
+  box-shadow:
+    0 18px 60px rgba(25, 24, 22, 0.06),
+    0 2px 10px rgba(25, 24, 22, 0.04);
+  border-radius: 24px;
+  backdrop-filter: blur(10px);
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgb(var(--border));
+  background: rgba(255, 255, 255, 0.7);
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgba(var(--accent), 0.55);
+  box-shadow: 0 0 0 4px rgba(var(--accent), 0.18);
+}
+
+.btn {
+  border-radius: 16px;
+  padding: 12px 14px;
+  border: 1px solid rgb(var(--border));
+  background: rgba(255, 255, 255, 0.65);
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 14px 40px rgba(25, 24, 22, 0.08);
+}
+
+.btn-primary {
+  border: 1px solid rgba(var(--accent), 0.45);
+  background: rgba(var(--accent), 0.22);
+}
+
+.muted { color: rgb(var(--muted)); }
