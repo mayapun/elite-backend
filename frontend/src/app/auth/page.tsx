@@ -55,16 +55,17 @@ export default function AuthPage() {
     }
 
     return (
+        <div className="flex flex-1 items-center justify-center">
         <motion.div
         initial={{ opacity:0, y:10}}
         animate={{ opacity:1, y:0}}
-        className="card p-6"
+        className="w-full max-w-xl bg-neutral-100 rounded-2xl p-8 shadow-md"
         >
             <div className="flex items-center justify-between mb-4">
                 <div>
                     <div className="text-2xl font-semibold">{title}</div>
-                    <div className="text-sm muted mt-1">
-                        A clam place to write, reflect, an keep your days.
+                    <div className="text-sm text-neutral-500 mt-1">
+                        A clam place to write, reflect, and keep your days.
                     </div>
                 </div>
 
@@ -104,5 +105,6 @@ export default function AuthPage() {
                 </button>
             </form>
         </motion.div>
+        </div>
     )
 }

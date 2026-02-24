@@ -1,5 +1,7 @@
 import type {Metadata} from "next";
 import "./globals.css";
+import AppShell from "@/components/AppShell";
+import Nav from "@/components/Nav";
 
 export const metadata: Metadata = {
     title: "Maya Journal",
@@ -10,7 +12,8 @@ export default function RootLayout({ children} : {children: React.ReactNode}){
     return (
         <html lang="en">
             <body>
-                <div className="container-narrow">
+                <AppShell>
+                <div className="bg-[#f4f1ec] rounded-3xl shadow-xl p-12 h-full flex flex-col min-h-0">
                     {/* Header is shared acorss all pages */}
                     <header className="flex items-center justify-between mb-6">
                         <div className="flex flex-col">
@@ -18,10 +21,7 @@ export default function RootLayout({ children} : {children: React.ReactNode}){
                             <div className="text-sm muted">soft thoughts, saved gently</div>
                         </div>
                         {/* Simple navigation links */}
-                        <nav className="flex gap-2">
-                            <a href="/feed" className="btn">Feed</a>
-                            <a href="/auth" className="btm">Auth</a>
-                        </nav>
+                        <Nav />
                     </header>
 
                     {/* This renders the current page */}
@@ -30,6 +30,7 @@ export default function RootLayout({ children} : {children: React.ReactNode}){
                         built with queit focus
                     </footer>
                 </div>
+                </AppShell>
             </body>
         </html>
     );

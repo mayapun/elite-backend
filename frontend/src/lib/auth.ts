@@ -14,5 +14,6 @@ export function clearToken(){
 }
 
 export function isAuthed():boolean {
+    console.log(getToken());
     return !!getToken();
 }
