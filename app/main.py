@@ -11,12 +11,16 @@ from app.db import Base, engine, get_db
 from app.routers import user_router, post_router
 from app.models import User
 from app.logger import logger
+from app.core.config import settings
 
 app = FastAPI()
-origins = [
-    "http://localhost:3000",
+
+if settings.ENVIRONMENT == "development":
+    origins = ["http://localhost:3000",
     "http://127.0.0.1:3000"
-]
+    ]
+else:
+    origins = ["https://vercel.com"]
 
 app.add_middleware(
     CORSMiddleware,

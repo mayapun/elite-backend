@@ -1,9 +1,13 @@
 import json
 import redis
-from app.config import REDIS_URL
+from app.core.config import settings
+
 
 # Single Redis client configured via env (defaults to localhost)
-r = redis.Redis.from_url(REDIS_URL, decode_responses=True)
+if settings.REDIS_URL:
+    r = redis.Redis.from_url(settings.REDIS_URL, decode_responses=True)
+else:
+    r = None
 
 def get_cache(key:str):
     data = r.get(key)
