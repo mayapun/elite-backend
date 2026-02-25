@@ -10,12 +10,18 @@ else:
     r = None
 
 def get_cache(key:str):
+    if r is None:
+        return
     data = r.get(key)
     return json.loads(data) if data else None
 
 def set_cache(key:str, value, ttl=60):
+    if r is None:
+        return
     r.set(key, json.dumps(value), ex=ttl)
 
 def delete_cache(prefix:str):
+    if r is None:
+        return
     for key in r.keys(f"{prefix}*"):
         r.delete(key)

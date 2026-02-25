@@ -2,6 +2,8 @@ from fastapi import HTTPException
 from app.cache import r 
 
 def rate_limit(key: str, limit: int, window:int = 60):
+    if r is None:
+        return
     count = r.incr(key)
 
     if count == 1:
