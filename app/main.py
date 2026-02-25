@@ -20,7 +20,7 @@ if settings.ENVIRONMENT == "development":
     "http://127.0.0.1:3000"
     ]
 else:
-    origins = ["https://elite-backend-zeta.vercel.app/"]
+    origins = ["https://elite-backend-zeta.vercel.app"]
 
 app.add_middleware(
     CORSMiddleware,
