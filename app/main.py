@@ -15,16 +15,12 @@ from app.core.config import settings
 
 app = FastAPI()
 
-# if settings.ENVIRONMENT == "development":
-#     origins = ["http://localhost:3000",
-#     "http://127.0.0.1:3000"
-#     ]
-# else:
-#     origins = ["https://vercel.com"]
-
-origins = ["http://localhost:3000",
-"http://127.0.0.1:3000",
-"https://vercel.com"]
+if settings.ENVIRONMENT == "development":
+    origins = ["http://localhost:3000",
+    "http://127.0.0.1:3000"
+    ]
+else:
+    origins = ["https://elite-backend-zeta.vercel.app/"]
 
 app.add_middleware(
     CORSMiddleware,
